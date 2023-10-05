@@ -128,7 +128,7 @@ def main() :
     f1score = f1_score(TestLabel, TestPrediction)
     f3score = fbeta_score(TestLabel, TestPrediction, beta=3)
 
-    text_file = open(MAIN_PATH+"/data/dtc_decision_tree_classifier/performances.txt", "w")
+    text_file = open(SAVE_PATH+"/performances.txt", "w")
     text_file.write("ROUNDED :\nAccuracy: %.1f\nPrecision: %.1f\nRecall: %.1f\nF1-score: %.1f\nF3-score: %.1f\n\n\n"%(100*accuracy, 100*precision, 100*recall, 100*f1score, 100*f3score))
     text_file.write("PRECISE :\nAccuracy: %f\nPrecision: %f\nRecall: %f\nF1-score: %f\nF3-score: %f"%(accuracy, precision, recall, f1score, f3score))
     text_file.close()

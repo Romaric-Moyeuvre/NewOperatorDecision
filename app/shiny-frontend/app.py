@@ -207,18 +207,6 @@ app_ui = ui.page_fluid(
                         ),
                     ),
                 ),
-                ui.nav("DATABASE",
-                    ui.div({"style":flex_center},ui.input_action_button("delete_database","DELETE DATABASE"),ui.div({"style":"width: 50px;"}),ui.input_action_button("update_database","UPDATE DATABASE")),
-                    ui.div({"style":"height:340px;"+margin+border},
-                        ui.h6({"style":"height: 30px;"+margin},"RUN INFORMATIONS"), 
-                        ui.div({"style":"height: 300px; overflow-y:scroll;"+margin+padding},ui.output_text_verbatim("get_all_run"))),  
-                    ui.div({"style":"height:340px;"+margin+border},
-                        ui.h6({"style":"height: 30px;"+margin},"PERFORMANCES INFORMATIONS"), 
-                        ui.div({"style":"height: 300px; overflow-y:scroll;"+margin+padding},ui.output_text_verbatim("get_all_performances"))),
-                ),
-                ui.nav("CLEAR",
-                    ui.p("Hello World")
-                ),
             ),
         ),
     ),
@@ -744,38 +732,5 @@ def server(input, output, session):
         if SDS.get() == "ON" :
             img: ImgData = {"src": ("../data/mlp_multi_layer_perceptron/mlp_thresholds.png"), "height":"660px;"}
             return img
-
-
-    @output
-    @render.text
-    @reactive.event(input.update_database, input.delete_database)
-    def get_all_run() :
-        conn = sqlite3.connect("../data/database/my_database.db")
-        cursor = conn.cursor()
-        cursor.execute("""SELECT * FROM all_run""")
-        data = cursor.fetchall()
-        c = "%4s | %6s | %6s | %4s | %6s | %6s\n"%('id', 'M_type', 'A_type', 'seed', 'T_mult', 'F_mult')
-        for info in data :
-            c += "%4d | %6s | %6s | %4d | %6d | %6d\n"%info
-        return c
-
-    @output
-    @render.text
-    @reactive.event(input.update_database, input.delete_database)
-    def get_all_performances() :
-        conn = sqlite3.connect("../data/database/my_database.db")
-        cursor = conn.cursor()
-        cursor.execute("""SELECT * FROM all_performances""")
-        data = cursor.fetchall()
-        c = "%4s | %6s | %8s | %9s | %6s | %8s | %8s\n"%('id', 'M_type', 'accuracy', 'precision', 'recall', 'f1-score', 'f3-score')
-        for info in data :
-            c += "%4d | %6s | %8.2f | %9.2f | %6.2f | %8.2f | %8.2f\n"%info
-        return c
-
-    @reactive.Effect
-    @reactive.event(input.delete_database)
-    def delete_database() :
-        subprocess.run(['sh', '../launchers/sh/delete_database.sh'], cwd=os.getcwd())
-    
 
 app = App(app_ui, server, debug=True)
