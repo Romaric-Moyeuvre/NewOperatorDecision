@@ -1,0 +1,29 @@
+version: "3.7"
+services:
+  python-shiny:    
+    container_name: ${DOCKER_NAME}
+    image: ${DOCKER_NAMESPACE}/${DOCKER_NAME}:${DOCKER_TAG}
+    build:
+      context: .
+      args:
+        INTERNAL_PORT: "${INTERNAL_PORT}"
+        FORCE_USER_ID: "${FORCE_USER_ID}"
+        FORCE_GROUP_ID: "${FORCE_GROUP_ID}"
+        PACKAGE_NAME: "${PACKAGE_NAME}"
+        PYTHON_VERSION: "${PYTHON_VERSION}"
+        # POETRY_VERSION: "${POETRY_VERSION}"
+      dockerfile: Dockerfile
+    environment:
+      - PACKAGE_NAME=${PACKAGE_NAME}
+      # - POETRY_VERSION=${POETRY_VERSION}
+    volumes:
+      - "./app:/home/serviceuser/app"
+      - "./conf:/home/serviceuser/conf"
+      - "./data:/home/serviceuser/data"
+      - "./log:/home/serviceuser/log"
+      - "./run:/home/serviceuser/run"
+      - "./launchers:/home/serviceuser/launchers"
+    ports:
+      - ${EXPOSED_PORT}:${INTERNAL_PORT}
+    tty: true
+    stdin_open: true
