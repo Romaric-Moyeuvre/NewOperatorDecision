@@ -67,6 +67,12 @@ def main() :
     feature_filter=numpy.array(S_features_filter+T_features_filter+B_features_filter)
     feature_names=feature_names[feature_filter]
 
+    TrueAlarm = []
+    FalseAlarm = []
+
+    TrueAlarmInfo = []
+    FalseAlarmInfo = []
+
     if ALARM_TYPE == "BOTH" or ALARM_TYPE == "TEMP" :
         path_temp_true = STATS_DATASET_PATH + "temperature/true_alarm"
         for file in os.listdir(path_temp_true) :
@@ -90,12 +96,6 @@ def main() :
                 FalseAlarm.append(numpy.load(path_temp_false+"/"+file)[feature_filter])
 
     for n in range(50) :
-
-        TrueAlarm = []
-        FalseAlarm = []
-
-        TrueAlarmInfo = []
-        FalseAlarmInfo = []
 
         TestSet, TestLabel, TestInfo, TrainSet, TrainLabel = [], [], [], [], []
 
