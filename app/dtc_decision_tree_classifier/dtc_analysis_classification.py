@@ -73,7 +73,6 @@ def main() :
     feature_filter=numpy.array(S_features_filter+T_features_filter+B_features_filter)
     feature_names=feature_names[feature_filter]
 
-
     TrueAlarm = []
     FalseAlarm = []
 
