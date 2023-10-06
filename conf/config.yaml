@@ -32,7 +32,7 @@ features:
   rel_T_Tmin_full_width: true
   rel_T_Tmin_semi_width: true
 global_parameters:
-  alarm_type: BOTH
+  alarm_type: TEMP
   random_seed: 0
 mlp_multi_layer_perceptron:
   batch_size: 16
