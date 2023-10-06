@@ -307,7 +307,7 @@ def server(input, output, session):
         ymlfile2.close()
 
     @reactive.Effect
-    @reactive.event(input.rfc_launch_test, rfc_launch_analysis_classification, rfc_launch_analysis_features)
+    @reactive.event(input.rfc_launch_test, input.rfc_launch_analysis_classification, input.rfc_launch_analysis_features)
     def update_rfc_parameters():
         configfile = "../conf/config.yaml"
         ymlfile = open(configfile, 'r')
@@ -343,7 +343,7 @@ def server(input, output, session):
         ymlfile2.close()
 
     @reactive.Effect
-    @reactive.event(input.mlp_launch_test, mlp_launch_analysis_classification, mlp_launch_analysis_thresholds)
+    @reactive.event(input.mlp_launch_test, input.mlp_launch_analysis_classification, input.mlp_launch_analysis_thresholds)
     def update_mlp_parameters():
         configfile = "../conf/config.yaml"
         ymlfile = open(configfile, 'r')
