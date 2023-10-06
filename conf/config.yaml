@@ -11,7 +11,9 @@ dtc_decision_tree_classifier:
     min_samples_leaf: 1
     min_samples_split: 2
 features:
+  abs_S_Smax: true
   abs_S_Smin: true
+  abs_T_Tmax: true
   abs_T_Tmin: true
   count_anomalies_S: true
   count_anomalies_T: true
@@ -21,12 +23,16 @@ features:
   nb_measurements: true
   ratio_anomalies_S: true
   ratio_anomalies_T: true
+  rel_S_Smax_full_width: true
+  rel_S_Smax_semi_width: true
   rel_S_Smin_full_width: true
   rel_S_Smin_semi_width: true
+  rel_T_Tmax_full_width: true
+  rel_T_Tmax_semi_width: true
   rel_T_Tmin_full_width: true
   rel_T_Tmin_semi_width: true
 global_parameters:
-  alarm_type: TEMP
+  alarm_type: BOTH
   random_seed: 0
 mlp_multi_layer_perceptron:
   batch_size: 16

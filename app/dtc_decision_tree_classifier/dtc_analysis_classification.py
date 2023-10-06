@@ -39,8 +39,8 @@ def main() :
     max_leaf_nodes = cfg["dtc_decision_tree_classifier"]["architecture"]["max_leaf_nodes"]
     min_impurity_decrease = cfg["dtc_decision_tree_classifier"]["architecture"]["min_impurity_decrease"]
 
-    S_features = ["abs_S_Smin","rel_S_Smin_semi_width","rel_S_Smin_full_width","count_anomalies_S","ratio_anomalies_S","max_variation_S"]
-    T_features = ["abs_T_Tmin","rel_T_Tmin_semi_width","rel_T_Tmin_full_width","count_anomalies_T","ratio_anomalies_T","max_variation_T"]
+    S_features = ["abs_S_Smin","rel_S_Smin_semi_width","rel_S_Smin_full_width","abs_S_Smax","rel_S_Smax_semi_width","rel_S_Smax_full_width","count_anomalies_S","ratio_anomalies_S","max_variation_S"]
+    T_features = ["abs_T_Tmin","rel_T_Tmin_semi_width","rel_T_Tmin_full_width","abs_T_Tmax","rel_T_Tmax_semi_width","rel_T_Tmax_full_width","count_anomalies_T","ratio_anomalies_T","max_variation_T"]
     B_features = ["mean_correlation","nb_measurements"]
 
     feature_names=numpy.array(S_features+T_features+B_features)
@@ -48,24 +48,31 @@ def main() :
     abs_S_Smin = cfg["features"]["abs_S_Smin"]
     rel_S_Smin_semi_width = cfg["features"]["rel_S_Smin_semi_width"]
     rel_S_Smin_full_width = cfg["features"]["rel_S_Smin_full_width"]
+    abs_S_Smax = cfg["features"]["abs_S_Smax"]
+    rel_S_Smax_semi_width = cfg["features"]["rel_S_Smax_semi_width"]
+    rel_S_Smax_full_width = cfg["features"]["rel_S_Smax_full_width"]
     count_anomalies_S = cfg["features"]["count_anomalies_S"]
     ratio_anomalies_S = cfg["features"]["ratio_anomalies_S"]
     max_variation_S = cfg["features"]["max_variation_S"]
     abs_T_Tmin = cfg["features"]["abs_T_Tmin"]
     rel_T_Tmin_semi_width = cfg["features"]["rel_T_Tmin_semi_width"]
     rel_T_Tmin_full_width = cfg["features"]["rel_T_Tmin_full_width"]
+    abs_T_Tmax = cfg["features"]["abs_T_Tmax"]
+    rel_T_Tmax_semi_width = cfg["features"]["rel_T_Tmax_semi_width"]
+    rel_T_Tmax_full_width = cfg["features"]["rel_T_Tmax_full_width"]
     count_anomalies_T = cfg["features"]["count_anomalies_T"]
     ratio_anomalies_T = cfg["features"]["ratio_anomalies_T"]
     max_variation_T = cfg["features"]["max_variation_T"]
     mean_correlation = cfg["features"]["mean_correlation"]
     nb_measurements = cfg["features"]["nb_measurements"]
 
-    S_features_filter = [abs_S_Smin,rel_S_Smin_semi_width,rel_S_Smin_full_width,count_anomalies_S,ratio_anomalies_S,max_variation_S]
-    T_features_filter = [abs_T_Tmin,rel_T_Tmin_semi_width,rel_T_Tmin_full_width,count_anomalies_T,ratio_anomalies_T,max_variation_T]
+    S_features_filter = [abs_S_Smin,rel_S_Smin_semi_width,rel_S_Smin_full_width,abs_S_Smax,rel_S_Smax_semi_width,rel_S_Smax_full_width,count_anomalies_S,ratio_anomalies_S,max_variation_S]
+    T_features_filter = [abs_T_Tmin,rel_T_Tmin_semi_width,rel_T_Tmin_full_width,abs_T_Tmax,rel_T_Tmax_semi_width,rel_T_Tmax_full_width,count_anomalies_T,ratio_anomalies_T,max_variation_T]
     B_features_filter = [mean_correlation,nb_measurements]
 
     feature_filter=numpy.array(S_features_filter+T_features_filter+B_features_filter)
     feature_names=feature_names[feature_filter]
+
 
     TrueAlarm = []
     FalseAlarm = []
@@ -156,7 +163,7 @@ def main() :
         conn.commit()
         cursor.execute("""INSERT INTO all_performances VALUES (%i, 'DTC', %f, %f, %f, %f, %f)"""%(id, accuracy, precision, recall, f1score, f3score))
         conn.commit()
-        cursor.execute("""INSERT INTO all_features_usage VALUES (%i,'DTC',%g,%g,%g,%g,%g,%g,%g,%g,%g,%g,%g,%g,%g,%g)"""%tuple([id]+list(feature_filter)))
+        cursor.execute("""INSERT INTO all_features_usage VALUES (%i,'DTC',%g,%g,%g,%g,%g,%g,%g,%g,%g,%g,%g,%g,%g,%g,%g,%g,%g,%g,%g,%g)"""%tuple([id]+list(feature_filter)))
         conn.commit()
         cursor.execute("""INSERT INTO dtc_parameters VALUES (%i,'DTC','%s',%d,%d,%d,%d,%d,%f)"""%(id,criterion,max_depth,min_samples_split,min_samples_leaf,max_features,max_leaf_nodes,min_impurity_decrease))
         conn.commit()

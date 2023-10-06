@@ -22,6 +22,9 @@ def get_stats(matrix) :
         abs_S_Smin = abs(S-Smin)
         rel_S_Smin_semi_width = abs(S-Smin)/abs(Smed-Smin) if abs(Smed-Smin) != 0 else abs_S_Smin
         rel_S_Smin_full_width = abs(S-Smin)/abs(Smax-Smin) if abs(Smax-Smin) != 0 else abs_S_Smin
+        abs_S_Smax = abs(S-Smax)
+        rel_S_Smax_semi_width = abs(S-Smax)/abs(Smed-Smax) if abs(Smed-Smax) != 0 else abs_S_Smax
+        rel_S_Smax_full_width = abs(S-Smax)/abs(Smin-Smax) if abs(Smin-Smax) != 0 else abs_S_Smax
         count_anomalies_S = 1 if S < Smin or S > Smax else 0
         ratio_anomalies_S = 1 if S < Smin or S > Smax else 0
         max_variation_S = 0
@@ -29,6 +32,9 @@ def get_stats(matrix) :
         abs_T_Tmin = abs(T-Tmin)
         rel_T_Tmin_semi_width = abs(T-Tmin)/abs(Tmed-Tmin) if abs(Tmed-Tmin) != 0 else abs_T_Tmin
         rel_T_Tmin_full_width = abs(T-Tmin)/abs(Tmax-Tmin) if abs(Tmax-Tmin) != 0 else abs_T_Tmin
+        abs_T_Tmax = abs(T-Tmin)
+        rel_T_Tmax_semi_width = abs(T-Tmax)/abs(Tmed-Tmax) if abs(Tmed-Tmax) != 0 else abs_T_Tmax
+        rel_T_Tmax_full_width = abs(T-Tmax)/abs(Tmin-Tmax) if abs(Tmin-Tmax) != 0 else abs_T_Tmax
         count_anomalies_T = 1 if (T < Tmin or T > Tmax) else 0
         ratio_anomalies_T = 1 if (T < Tmin or T > Tmax) else 0
         max_variation_T = 0
@@ -41,11 +47,17 @@ def get_stats(matrix) :
         abs_S_Smin = 0
         rel_S_Smin_semi_width = 0
         rel_S_Smin_full_width = 0
+        abs_S_Smax = 0
+        rel_S_Smax_semi_width = 0
+        rel_S_Smax_full_width = 0
         count_anomalies_S = 0
 
         abs_T_Tmin = 0
         rel_T_Tmin_semi_width = 0
         rel_T_Tmin_full_width = 0
+        abs_T_Tmax = 0
+        rel_T_Tmax_semi_width = 0
+        rel_T_Tmax_full_width = 0
         count_anomalies_T = 0
 
         nb_measurements = number_of_measurements
@@ -69,11 +81,17 @@ def get_stats(matrix) :
             abs_S_Smin = max(abs(S-Smin), abs_S_Smin)
             rel_S_Smin_semi_width = max(abs(S-Smin)/abs(Smed-Smin), rel_S_Smin_semi_width) if abs(Smed-Smin) != 0 else rel_S_Smin_semi_width
             rel_S_Smin_full_width = max(abs(S-Smin)/abs(Smax-Smin), rel_S_Smin_full_width) if abs(Smax-Smin) != 0 else rel_S_Smin_full_width
+            abs_S_Smax = max(abs(S-Smax), abs_S_Smax)
+            rel_S_Smax_semi_width = max(abs(S-Smax)/abs(Smed-Smax), rel_S_Smax_semi_width) if abs(Smed-Smax) != 0 else rel_S_Smax_semi_width
+            rel_S_Smax_full_width = max(abs(S-Smax)/abs(Smin-Smax), rel_S_Smax_full_width) if abs(Smin-Smax) != 0 else rel_S_Smax_full_width
             count_anomalies_S += 1 if S < Smin or S > Smax else 0
 
             abs_T_Tmin = max(abs(T-Tmin), abs_T_Tmin)
             rel_T_Tmin_semi_width = max(abs(T-Tmin)/abs(Tmed-Tmin), rel_T_Tmin_semi_width) if abs(Tmed-Tmin) != 0 else rel_T_Tmin_semi_width
             rel_T_Tmin_full_width = max(abs(T-Tmin)/abs(Tmax-Tmin), rel_T_Tmin_full_width) if abs(Tmax-Tmin) != 0 else rel_T_Tmin_full_width
+            abs_T_Tmax = max(abs(T-Tmax), abs_T_Tmax)
+            rel_T_Tmax_semi_width = max(abs(T-Tmax)/abs(Tmed-Tmax), rel_T_Tmax_semi_width) if abs(Tmed-Tmax) != 0 else rel_T_Tmax_semi_width
+            rel_T_Tmax_full_width = max(abs(T-Tmax)/abs(Tmin-Tmax), rel_T_Tmax_full_width) if abs(Tmin-Tmax) != 0 else rel_T_Tmax_full_width
             count_anomalies_T += 1 if T < Tmin or T > Tmax else 0
 
         for k in range(number_of_measurements-1) :
@@ -91,8 +109,8 @@ def get_stats(matrix) :
         ratio_anomalies_S = count_anomalies_S / number_of_measurements
         ratio_anomalies_T = count_anomalies_T / number_of_measurements
 
-    S_tab = [abs_S_Smin,rel_S_Smin_semi_width,rel_S_Smin_full_width,count_anomalies_S,ratio_anomalies_S,max_variation_S]
-    T_tab = [abs_T_Tmin,rel_T_Tmin_semi_width,rel_T_Tmin_full_width,count_anomalies_T,ratio_anomalies_T,max_variation_T]
+    S_tab = [abs_S_Smin,rel_S_Smin_semi_width,rel_S_Smin_full_width,abs_S_Smax,rel_S_Smax_semi_width,rel_S_Smax_full_width,count_anomalies_S,ratio_anomalies_S,max_variation_S]
+    T_tab = [abs_T_Tmin,rel_T_Tmin_semi_width,rel_T_Tmin_full_width,abs_T_Tmax,rel_T_Tmax_semi_width,rel_T_Tmax_full_width,count_anomalies_T,ratio_anomalies_T,max_variation_T]
     B_tab = [mean_correlation,nb_measurements]
 
     return S_tab+T_tab+B_tab
