@@ -272,7 +272,7 @@ def server(input, output, session):
             SDS.set("OFF")
 
     @reactive.Effect
-    @reactive.event(input.dtc_launch_test, dtc_launch_analysis_classification, dtc_launch_analysis_features)
+    @reactive.event(input.dtc_launch_test, input.dtc_launch_analysis_classification, input.dtc_launch_analysis_features)
     def update_dtc_parameters():
         configfile = "../conf/config.yaml"
         ymlfile = open(configfile, 'r')
